@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include<conio.h>
+int main()
+{
+int pno[20], bt[20], pr[20], wt[20], tat[20], i, j, n, temp,totwt=0,tottat=0;
+float avgwt,avgtat;
+printf("Enter the number of processes --- ");
+scanf("%d", &n);
+for (i = 0; i< n; i++)
+{
+pno[i] = i;
+printf("Enter the Burst Time & Priority of Process %d --- ", i);
+scanf("%d %d", &bt[i], &pr[i]);
+}
+for (i = 0; i< n; i++)
+for (j = i + 1; j < n; j++)
+if (pr[i] > pr[j])
+{
+temp = pno[i];
+pno[i] = pno[j];
+pno[j] = temp;
+temp = bt[i];
+bt[i] = bt[j];
+bt[j] = temp;
+temp = pr[i];
+pr[i] = pr[j];
+pr[j] = temp;
+}
+
+for(i=0;i<n;i++)
+{
+wt[i]=0;
+for(j=0;j<i;j++)
+wt[i]+=bt[j];
+}
+tottat=0;
+printf("\nProcess\tPriority \t Burst Time \tWaiting Time\tTurnaround Time");
+for(i=0;i<n;i++)
+{
+
+tat[i]=bt[i]+wt[i];
+tottat+=tat[i];
+totwt+=wt[i];
+printf("\np%d\t\t %d\t\t %d\t\t %d\t\t %d",pno[i],pr[i],bt[i],wt[i],tat[i]);
+}
+avgwt=(float)totwt/n;
+avgtat=(float)tottat/n;
+printf("\n\nAverage Waiting Time=%f",avgwt);
+printf("\nAverage Turnaround Time=%f\n",avgtat);
+}
